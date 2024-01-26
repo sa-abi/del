@@ -29,7 +29,9 @@ table_data.drop(['count'], axis=1, inplace=True)
 
 # Sort by ratio in descending order
 table_data.sort_values(by='Ratio', ascending=False, inplace=True)
-
+mean_ratio = table_data['Ratio'].mean()
+median_ratio = table_data['Ratio'].median()
+std_dev_ratio = table_data['Ratio'].std()
 # Displaying the table with highlighting
 styled_table = table_data.style.background_gradient(cmap='RdYlGn_r', subset=['Ratio']).format({
     'Number of 1s': '{:.0f}',
@@ -38,5 +40,11 @@ styled_table = table_data.style.background_gradient(cmap='RdYlGn_r', subset=['Ra
     'Total': '{:.0f}',
     'Ratio': '{:.2%}'
 })
+
+# Print the mean, median, and standard deviation
+print(f"Mean Ratio: {mean_ratio:.2%}")
+print(f"Median Ratio: {median_ratio:.2%}")
+print(f"Standard Deviation of Ratio: {std_dev_ratio:.4f}")
+
 
 display(styled_table)
