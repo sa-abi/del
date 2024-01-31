@@ -13,9 +13,9 @@ insight_colors = {
     "Insight 3": "error"
 }
 
-# Row 1 - Metrics and Text
+# Row 1 - Metrics and Text for Insight 1 and Insight 2
 with st.container():
-    columns = st.columns(2)
+    columns = st.columns([1.5, 1.5])  # Adjusted column widths
 
     # Insight 1
     with columns[0]:
