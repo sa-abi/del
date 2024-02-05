@@ -1,19 +1,20 @@
-import pandas as pd
-import numpy as np
-from scipy.stats import zscore
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-# Assuming df is your DataFrame with columns 'Sector', 'Client', and 'Incident Rate'
+# Assuming df is your DataFrame with the calculated columns
 
-# Step 1: Calculate incident rate mean and standard deviation for each sector
-sector_stats = df.groupby('Sector')['Incident Rate'].agg(['mean', 'std']).reset_index()
-sector_stats.columns = ['Sector', 'Incident Rate Mean', 'Incident Rate Std']
+# Plotting a histogram
+plt.figure(figsize=(10, 6))
+ax = sns.histplot(df['Incident Rate'], bins=20, kde=True, color='blue')
 
-# Step 2: Merge the calculated statistics back to the original DataFrame
-df = pd.merge(df, sector_stats, on='Sector', how='left')
+# Highlighting specific values
+highlight_values = [8.79, 6.95]
+for value in highlight_values:
+    ax.annotate(f'{value}', xy=(value, 0), xytext=(value, 5),
+                arrowprops=dict(facecolor='red', shrink=0.05),
+                color='red', fontsize=10, ha='center')
 
-# Step 3: Calculate zscore and is_outlier columns
-df['Incident Rate Zscore'] = df.groupby('Sector')['Incident Rate'].transform(lambda x: zscore(x))
-df['Is Outlier'] = np.abs(df['Incident Rate Zscore']) > 2
-
-# Display the resulting DataFrame
-print(df)
+plt.title('Incident Rate Distribution')
+plt.xlabel('Incident Rate')
+plt.ylabel('Frequency')
+plt.show()
