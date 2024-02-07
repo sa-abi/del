@@ -1,50 +1,87 @@
 import streamlit as st
 
-# Set page configuration
-st.set_page_config(page_title="Client Portal", page_icon=":briefcase:")
-
-# Client Title
-st.title("Client Portal")
-
-# Define color codes for insights
-insight_colors = {
-    "Insight 1": "info",
-    "Insight 2": "warning",
-    "Insight 3": "error"
+# Sample insights for each block
+insights = {
+    "Insight 1": "This is insight 1",
+    "Insight 2": "This is insight 2",
+    "Insight 3": "This is insight 3",
+    "Insight 4": "This is insight 4"
 }
 
-# Row 1 - Metrics and Text for Insight 1 and Insight 2
-with st.container():
-    columns = st.columns([1.5, 1.5])  # Adjusted column widths
+# Sample sticky notes
+sticky_notes = [
+    "Note 1",
+    "Note 2",
+    "Note 3",
+    "Note 4",
+    "Note 5",
+    "Note 6",
+    "Note 7",
+    "Note 8",
+    "Note 9",
+    "Note 10"
+]
 
-    # Insight 1
-    with columns[0]:
-        st.markdown(f'<div style="background-color: {insight_colors["Insight 1"]}; padding: 10px; border-radius: 5px;">', unsafe_allow_html=True)
-        st.info("Insight 1")
-        st.metric("Metric 1", value=42, delta=5)
-        st.text("Sample text for Metric 1")
-        st.markdown('</div>', unsafe_allow_html=True)
+# Function to display insights in a 2x2 grid
+def display_insight_block(insight):
+    col1, col2 = st.columns(2)  # Create a layout with 2 columns
+    with col1:
+        st.markdown(f"**{insight[0][0]}**")
+        st.write(insight[0][1])
+        st.write("---")  # Add a separator
 
-    # Insight 2
-    with columns[1]:
-        st.markdown(f'<div style="background-color: {insight_colors["Insight 2"]}; padding: 10px; border-radius: 5px;">', unsafe_allow_html=True)
-        st.warning("Insight 2")
-        st.metric("Metric 2", value=75, delta=-8)
-        st.text("Sample text for Metric 2")
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown(f"**{insight[1][0]}**")
+        st.write(insight[1][1])
+        st.write("---")  # Add a separator
 
-# Row 2 - Metrics and Text for Insight 3
-with st.container():
-    columns = st.columns(1)
+    with col2:
+        st.markdown(f"**{insight[2][0]}**")
+        st.write(insight[2][1])
+        st.write("---")  # Add a separator
 
-    # Insight 3
-    with columns[0]:
-        st.markdown(f'<div style="background-color: {insight_colors["Insight 3"]}; padding: 10px; border-radius: 5px;">', unsafe_allow_html=True)
-        st.error("Insight 3")
-        st.metric("Metric 3", value=95, delta=12)
-        st.text("Sample text for Metric 3")
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown(f"**{insight[3][0]}**")
+        st.write(insight[3][1])
+        st.write("---")  # Add a separator
 
-# Additional content
-st.title("Additional Content")
-st.write("Add any additional content here.")
+# Main function to create the app
+def main():
+    st.title("Streamlit App with Tabs")
+
+    # Create 5 tabs
+    tab_selected = st.sidebar.radio("Select Tab", ["Tab 1", "Tab 2", "Tab 3", "Tab 4", "Sticky Notes"])
+
+    # Tab 1 to 4
+    if tab_selected.startswith("Tab"):
+        tab_number = int(tab_selected.split()[-1])  # Extract tab number
+        st.write(f"This is {tab_selected}")
+        display_insight_block(list(insights.items()))
+
+    # Sticky Notes Sub-Tabs
+    elif tab_selected == "Sticky Notes":
+        st.write("Select a sticky note to view insights")
+
+        tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab9 = st.tabs(sticky_notes)
+        with tab1:
+            st.write(f"Insights for {sticky_notes[0]}:")
+            display_insight_block(list(insights.items()))
+        with tab2:
+            st.write(f"Insights for {sticky_notes[0]}:")
+            display_insight_block(list(insights.items()))
+        with tab3:
+            st.write(f"Insights for {sticky_notes[0]}:")
+            display_insight_block(list(insights.items()))
+        with tab4:
+            st.write(f"Insights for {sticky_notes[0]}:")
+            display_insight_block(list(insights.items()))
+
+
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
